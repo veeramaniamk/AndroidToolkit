@@ -13,14 +13,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
@@ -31,9 +34,10 @@ import com.tool.calendar.model.CalendarDay
 import com.tool.calendar.theme.CalendarColors
 import com.tool.calendar.theme.CalendarShapes
 import com.tool.calendar.theme.CalendarTypography
+import kotlinx.coroutines.delay
 
 /**
- * Individual date cell within the calendar grid.
+ * Individual date cell within the calendar grid with smooth staggered entrance animation.
  */
 @Composable
 fun CalendarDayCell(
@@ -42,18 +46,43 @@ fun CalendarDayCell(
     typography: CalendarTypography,
     shapes: CalendarShapes,
     onDateClick: (CalendarDay) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    cellIndex: Int = 0
 ) {
     val isEnabled = day.isSelectable
 
-    // Animated scale effect when selected
-    val scale by animateFloatAsState(
-        targetValue = if (day.isSelected) 1.05f else 1f,
+    // Smooth staggered entrance animation when days are printed/rendered
+    var isAppeared by remember(day.date) { mutableStateOf(false) }
+
+    LaunchedEffect(day.date) {
+        val delayMillis = ((cellIndex % 7) * 12L + (cellIndex / 7) * 16L).coerceAtMost(160L)
+        delay(delayMillis)
+        isAppeared = true
+    }
+
+    val enterScale by animateFloatAsState(
+        targetValue = if (isAppeared) 1f else 0.72f,
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
             stiffness = Spring.StiffnessMedium
         ),
-        label = "cellScale"
+        label = "cellEnterScale"
+    )
+
+    val enterAlpha by animateFloatAsState(
+        targetValue = if (isAppeared) 1f else 0f,
+        animationSpec = tween(durationMillis = 180),
+        label = "cellEnterAlpha"
+    )
+
+    // Animated scale effect when selected
+    val selectionScale by animateFloatAsState(
+        targetValue = if (day.isSelected) 1.06f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
+        label = "cellSelectionScale"
     )
 
     // Background color animation
@@ -84,13 +113,15 @@ fun CalendarDayCell(
     Box(
         modifier = modifier
             .aspectRatio(1f)
-            .padding(2.dp),
+            .padding(2.dp)
+            .scale(enterScale)
+            .alpha(enterAlpha),
         contentAlignment = Alignment.Center
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize(0.92f)
-                .scale(scale)
+                .scale(selectionScale)
                 .clip(shapes.dayShape)
                 .background(backgroundColor)
                 .then(

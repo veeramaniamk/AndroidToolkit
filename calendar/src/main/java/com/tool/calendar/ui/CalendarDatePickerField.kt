@@ -48,7 +48,8 @@ fun CalendarDatePickerField(
     colors: CalendarColors = CalendarDefaults.colors(),
     typography: CalendarTypography = CalendarDefaults.typography(),
     shapes: CalendarShapes = CalendarDefaults.shapes(),
-    dialogTitle: String = "Select Date",
+    showHeader: Boolean = true,
+    showTodayButton: Boolean = true,
     formatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM),
     isClearable: Boolean = true,
     onClear: (() -> Unit)? = null,
@@ -136,7 +137,8 @@ fun CalendarDatePickerField(
             colors = colors,
             typography = typography,
             shapes = shapes,
-            title = dialogTitle,
+            showHeader = showHeader,
+            showTodayButton = showTodayButton,
             locale = locale
         )
     }

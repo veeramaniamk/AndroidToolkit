@@ -301,7 +301,6 @@ fun CalendarShowcaseApp() {
                             colors = calendarColors,
                             typography = calendarTypography,
                             label = "Select Appointment Date",
-                            dialogTitle = "Choose Appointment Date",
                             modifier = Modifier.fillMaxWidth()
                         )
                     }

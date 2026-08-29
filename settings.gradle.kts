@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidToolkit"
 include(":app")
-include(":Calendar")
+include(":calendar")
