@@ -154,92 +154,22 @@ fun CalendarDialog(
                     shadowElevation = 8.dp,
                     tonalElevation = 6.dp
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        // Dialog Header / Date Title
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 4.dp)
-                        ) {
-                            Text(
-                                text = title.uppercase(locale),
-                                style = typography.weekdayStyle.copy(
-                                    fontSize = 11.sp,
-                                    letterSpacing = 1.2.sp
-                                ),
-                                color = colors.headerTextColor.copy(alpha = 0.7f)
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            val formattedDate = state.selectedDate?.format(
-                                DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale)
-                            ) ?: "Choose a date"
 
-                            Text(
-                                text = formattedDate,
-                                style = typography.headerTitleStyle.copy(fontWeight = FontWeight.Bold),
-                                color = colors.headerTextColor,
-                                maxLines = 1
-                            )
-                        }
+                    // Inline Calendar Component
+                    CalendarView(
+                        state = state,
+                        colors = colors,
+                        typography = typography,
+                        shapes = shapes,
+                        locale = locale,
+                        onDateSelected = {
+                            onDateConfirmed(it)
+                            dismissWithAnimation()
+                        },
+                        showTodayButton = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // Inline Calendar Component
-                        CalendarView(
-                            state = state,
-                            colors = colors,
-                            typography = typography,
-                            shapes = shapes,
-                            locale = locale,
-                            showTodayButton = true,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        // Dialog Action Buttons
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            TextButton(
-                                onClick = dismissWithAnimation
-                            ) {
-                                Text(
-                                    text = dismissButtonText,
-                                    style = typography.actionButtonStyle,
-                                    color = colors.headerTextColor.copy(alpha = 0.8f)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            Button(
-                                onClick = {
-                                    state.selectedDate?.let { date ->
-                                        onDateConfirmed(date)
-                                        dismissWithAnimation()
-                                    }
-                                },
-                                enabled = state.selectedDate != null,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = colors.selectedDayBackgroundColor,
-                                    contentColor = colors.selectedDayTextColor
-                                ),
-                                shape = shapes.pickerItemShape
-                            ) {
-                                Text(
-                                    text = confirmButtonText,
-                                    style = typography.actionButtonStyle
-                                )
-                            }
-                        }
-                    }
                 }
             }
         }
