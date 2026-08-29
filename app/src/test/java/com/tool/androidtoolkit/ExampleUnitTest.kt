@@ -1,4 +1,4 @@
-package com.veera.androidtoolkit
+package com.tool.androidtoolkit
 
 import org.junit.Test
 
