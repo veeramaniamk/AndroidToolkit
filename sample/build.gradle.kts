@@ -53,7 +53,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.veeramaniamk"
+                groupId = "com.github.veeramaniamk.AndroidToolkit"
                 artifactId = "sample"
                 version = "1.0.0"
             }

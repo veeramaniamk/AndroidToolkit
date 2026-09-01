@@ -67,9 +67,10 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.veeramaniamk"
+                groupId = "com.github.veeramaniamk.AndroidToolkit"
                 artifactId = "calendar"
-                version = "1.0.1"
+                version = "1.0.3"
+//                version = System.getenv("VERSION") ?: "1.0.0"
             }
         }
     }
