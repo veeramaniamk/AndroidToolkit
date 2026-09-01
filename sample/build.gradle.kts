@@ -55,7 +55,7 @@ afterEvaluate {
 
                 groupId = "com.github.veeramaniamk.AndroidToolkit"
                 artifactId = "sample"
-                version = "1.0.0"
+                version = project.version.toString()
             }
         }
     }

@@ -69,8 +69,7 @@ afterEvaluate {
 
                 groupId = "com.github.veeramaniamk.AndroidToolkit"
                 artifactId = "calendar"
-                version = "1.0.3"
-//                version = System.getenv("VERSION") ?: "1.0.0"
+                version = project.version.toString()
             }
         }
     }
