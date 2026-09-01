@@ -1,21 +1,25 @@
-# AndroidToolkit
+# 🧰 AndroidToolkit
 
-Android Toolkit is a modular Android library containing ready-to-use Compose components and utilities.
+A modular Android library collection containing ready-to-use Jetpack Compose components and utilities.
 
-## Published Modules
-
-| Module | Description | Dependency Coordinate |
-| :--- | :--- | :--- |
-| **`:calendar`** | Compose Calendar UI and utilities | `com.github.veeramaniamk.AndroidToolkit:calendar:<tag>` |
-| **`:sample`** | Sample utility module | `com.github.veeramaniamk.AndroidToolkit:sample:<tag>` |
+Each module in this repository is published and distributed **independently** via JitPack, allowing developers to import only what they need.
 
 ---
 
-## Getting Started
+## 📦 Available Modules
 
-### 1. Add JitPack Repository
+| Module | Description | Dependency Coordinate | Documentation |
+| :--- | :--- | :--- | :--- |
+| **`:calendar`** | Responsive Compose Calendar, Dialogs & DatePicker Field | `com.github.veeramaniamk.AndroidToolkit:calendar:1.0.2` | [📖 Read Docs](docs/CALENDAR.md) |
+| **`:sample`** | Sample utility module | `com.github.veeramaniamk.AndroidToolkit:sample:1.0.2` | [📖 Read Docs](docs/MODULE_TEMPLATE.md) |
+| *(More coming soon)* | Add new modules seamlessly | `com.github.veeramaniamk.AndroidToolkit:<module>:<tag>` | [Template](docs/MODULE_TEMPLATE.md) |
 
-Add JitPack to your `settings.gradle.kts`:
+---
+
+## 🚀 Quick Setup for Consumers
+
+### 1. Enable JitPack Repository
+In the consuming project's `settings.gradle.kts`:
 
 ```kotlin
 dependencyResolutionManagement {
@@ -28,22 +32,40 @@ dependencyResolutionManagement {
 }
 ```
 
-### 2. Add Desired Module Dependency
-
+### 2. Add Desired Module
 In your app's `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    // Import Calendar module only
+    // Import ONLY the Calendar module
     implementation("com.github.veeramaniamk.AndroidToolkit:calendar:1.0.2")
-
-    // Or import Sample module only
-    // implementation("com.github.veeramaniamk.AndroidToolkit:sample:1.0.2")
 }
 ```
 
 ---
 
-## Documentation
+## 🗓️ Calendar Module Preview
 
-For instructions on publishing and releasing multi-module libraries from scratch, refer to the [JitPack Publishing Guide](JITPACK_PUBLISHING_GUIDE.md).
+The `:calendar` module provides 3 ready-to-use UI flavors:
+1. **`CalendarView`** – Fully responsive inline calendar with swipe navigation.
+2. **`CalendarDatePickerField`** – Clean form input text field with date formatting and clear button.
+3. **`CalendarDialog`** – Animated modal dialog popup with spring physics.
+
+```kotlin
+// Example: Embed inline Calendar
+CalendarView(
+    state = rememberCalendarState(),
+    onDateSelected = { date ->
+        println("Selected date: $date")
+    }
+)
+```
+
+👉 [**Full Calendar Documentation & Examples**](docs/CALENDAR.md)
+
+---
+
+## 🛠️ Maintainer & Contribution Guides
+
+- [JitPack Multi-Module Publishing Guide](JITPACK_PUBLISHING_GUIDE.md) — How to configure Gradle, publish, and release tags from scratch.
+- [New Module Documentation Template](docs/MODULE_TEMPLATE.md) — Template for documenting future modules.
